@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!-- VO -->
+<configuration>
+	<typeAliases>
+		<!-- 1. auto mapping to VO -->
+		<typeAlias type="com.dolly.spring.shopping.member.vo.MemberVO" alias="memberVO" />
+		<typeAlias type="com.dolly.spring.shopping.goods.vo.GoodsVO" alias="goodsVO" />
+		<typeAlias type="com.dolly.spring.shopping.detail_image.vo.DetailImageVO" alias="detailImageVO" />
+		<typeAlias type="com.dolly.spring.shopping.cart.vo.CartVO" alias="cartVO" />
+		<typeAlias type="com.dolly.spring.shopping.order.vo.OrderVO" alias="orderVO" />
+	</typeAliases>
+</configuration>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper -->
+<mapper namespace="mapper.order">
+	<!-- resultMap -->
+	<resultMap id="orderResult" type="orderVO">
+		<result property="id" column="id" />
+		<result property="pwd" column="pwd" />
+		<result property="name" column="name" />
+		<result property="email" column="email" />
+		<result property="joinDate" column="joinDate" />
+	</resultMap>
+
+	<!-- selectAllMemberList : select * from -->
+	<select id="selectAllMemberList" resultMap="memResult">
+		<![CDATA[
+			select * from t_member order by joinDate desc
+		]]>
+	</select>
+
+	<!-- selectName : select name from t_member where id = 'hong' -->
+	<select id="selectName" resultType="String">
+		<![CDATA[
+			select name from t_member
+			where id = 'hong'
+		]]>
+	</select>
+
+	<!-- selectPwd : select pwd from t_member where id = 'hong' -->	
+	<select id="selectPwd" resultType="int"> <!-- 3. 4. -->
+	    <![CDATA[
+	      select pwd from t_member
+	      where id= 'hong'
+	    ]]>
+	</select>
+
+	<!-- selectMemberById : select * from t_member where id = ? -->
+	<select id="selectMemberById" resultType="memberVO"
+		parameterType="String">
+      <![CDATA[
+         select * from t_member
+         where
+         id=#{id}			
+      ]]>
+	</select>
+
+	<!-- selectMemberByPwd : select * from t_member where pwd = ? -->
+	<select id="selectMemberByPwd" resultMap="memResult"
+		parameterType="String">
+      <![CDATA[
+         select * from t_member
+         where
+         pwd = #{pwd}			
+      ]]>
+	</select>
+
+	<!-- insertMember (memberVO) : insert into t_member(id,pwd, name, email) values (#{id}, #{pwd}, #{name}, #{email}) -->
+		<insert id="insertMember" parameterType="memberVO">
+		<![CDATA[
+		 insert into t_member(id,pwd, name, email)
+		 values(#{id}, #{pwd}, #{name}, #{email})
+		]]>
+	</insert>
+
+	<!-- insertMember2 (java.util.HashMap) : insert into t_member(id, pwd, name, email) values (?, ?, ?, ?) -->
+	<insert id="insertMember2" parameterType="java.util.Map">
+		<![CDATA[
+			 insert into t_member(id,pwd, name, email)
+			 values(#{id}, #{pwd}, #{name}, #{email})
+		]]>
+	</insert>
+
+	<!-- updateMember : update t_member set pwd=?, name=?, email=? where id=? -->
+	<update id="updateMember" parameterType="memberVO">
+     <![CDATA[
+	     update t_member
+	     set pwd=#{pwd}, name=#{name}, email=#{email}
+	     where
+	     id=#{id}
+      ]]>
+	</update>
+	
+
+	<!-- deleteMember : delete from  t_member where id=? -->  
+		<delete id="deleteMember" parameterType="String">
+	<![CDATA[
+	   delete from  t_member
+	   where
+	   id=#{id}
+	]]>
+	</delete>
+</mapper>
+
+

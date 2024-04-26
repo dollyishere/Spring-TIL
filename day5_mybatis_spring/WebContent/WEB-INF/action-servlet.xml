@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- ViewResolver -->	
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- it can read jstl files to JstlView servlet from spring framework -->
+		<!-- it is fixed values -->
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	
+	<!-- HandlerMapping -->
+	<bean id="urlMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/member/*.do">memberController</prop>
+				<prop key="/goods/*.do">goodsController</prop>
+				<prop key="/detailImage/*.do">detailImageController</prop>
+				<prop key="/cart/*.do">cartController</prop>
+				<prop key="/order/*.do">orderController</prop>
+			</props>		
+		</property>
+	</bean>
+	
+	<!-- Controller -->
+	<bean id="memberController"
+		class="com.dolly.spring.shopping.member.controller.MemberControllerImpl">
+		<property name="methodNameResolver">
+			<ref local="memberMethodResolver" />
+		</property>
+		<!-- it not in here, but other xml(action-service) make it, so you can use it too -->
+		<property name="memberService" ref="memberService" />
+	</bean>
+	
+	<bean id="goodsController"
+		class="com.dolly.spring.shopping.goods.controller.GoodsControllerImpl">
+		<property name="methodNameResolver">
+			<ref local="goodsMethodResolver" />
+		</property>
+		<!-- it not in here, but other xml(action-service) make it, so you can use it too -->
+		<property name="goodsService" ref="goodsService" />
+	</bean>
+	
+	<bean id="detailImageController"
+		class="com.dolly.spring.shopping.detail_image.controller.DetailImageControllerImpl">
+		<property name="methodNameResolver">
+			<ref local="detailImageMethodResolver" />
+		</property>
+		<!-- it not in here, but other xml(action-service) make it, so you can use it too -->
+		<property name="detailImageService" ref="detailImageService" />
+	</bean>
+	
+	<bean id="cartController"
+		class="com.dolly.spring.shopping.cart.controller.CartControllerImpl">
+		<property name="methodNameResolver">
+			<ref local="cartMethodResolver" />
+		</property>
+		<!-- it not in here, but other xml(action-service) make it, so you can use it too -->
+		<property name="cartService" ref="cartService" />
+	</bean>
+	
+	<bean id="orderController"
+		class="com.dolly.spring.shopping.order.controller.OrderControllerImpl">
+		<property name="methodNameResolver">
+			<ref local="orderMethodResolver" />
+		</property>
+		<!-- it not in here, but other xml(action-service) make it, so you can use it too -->
+		<property name="orderService" ref="orderService" />
+	</bean>
+
+	<!-- MethodNameResolver -->
+	<bean id="memberMethodResolver"
+		class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+		<property name="mappings">
+			<props>
+				<prop key="/member/listMembers.do">listMembers</prop>
+				<prop key="/member/memberForm.do">memberForm</prop>
+				<prop key="/member/addMember.do">addMember</prop>
+				<prop key="/member/modMemberForm.do">modMemberForm</prop>
+				<prop key="/member/modMember.do">modMember</prop>
+				<prop key="/member/removeMember.do">removeMember</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="goodsMethodResolver"
+		class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+		<property name="mappings">
+			<props>
+				<prop key="/member/listMembers.do">listMembers</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="detailImageMethodResolver"
+		class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+		<property name="mappings">
+			<props>
+				<prop key="/member/listMembers.do">listMembers</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="cartMethodResolver"
+		class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+		<property name="mappings">
+			<props>
+				<prop key="/member/listMembers.do">listMembers</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="orderMethodResolver"
+		class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+		<property name="mappings">
+			<props>
+				<prop key="/member/listMembers.do">listMembers</prop>
+			</props>
+		</property>
+	</bean>
+</beans>
