@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper -->
+<mapper namespace="mapper.todo">
+	<!-- resultMap -->
+	<resultMap id="todoResult" type="todoVO">
+		<result property="todoSeq" column="todoseq" />
+		<result property="userId" column="userid" />
+		<result property="todoData" column="tododata" />
+		<result property="regDate" column="regdate" />
+		<result property="importance" column="importance" />
+		<result property="deadline" column="deadline" />
+		<result property="result" column="result" />
+	</resultMap>
+
+	<!-- selectAllTodoList : select * from tbl_todo where userid = ?  -->	
+	<select id="selectAllTodoList" resultMap="todoResult">
+		select *
+		from tbl_todo
+		where userid = #{userId}
+		order by todoSeq desc
+	</select>
+
+	<!-- insertTodo (todoVO) : insert into tbl_todo(userid, tododata, regdate, importance, deadline, result) values (?, ?, ?, ?, ?, ?)-->
+	<insert id="insertTodo" parameterType="todoVO">
+		<![CDATA[
+		 insert into tbl_todo(userid, tododata, regdate, importance, deadline, result)
+		 values(#{userId}, #{todoData}, sysdate, #{importance, jdbcType=VARCHAR}, #{deadline, jdbcType=VARCHAR}, #{result, jdbcType=VARCHAR})
+		]]>
+	</insert>
+
+	<!-- selectOneTodo : select * from tbl_todo where todoseq=? -->
+	<select id="selectOneTodo" parameterType="int" resultMap="todoResult">
+     <![CDATA[
+	     select * from tbl_todo
+	     where
+	     todoseq=#{todoSeq}
+      ]]>
+	</select>
+	
+	<!-- updateTodo : update tbl_todo set tododata=#?, importance=?, deadline=?, result=? where todoseq=? -->
+	<update id="updateTodo" parameterType="todoVO">
+     <![CDATA[
+	     update tbl_todo
+	     set tododata=#{todoData}, importance=#{importance, jdbcType=VARCHAR}, deadline=#{deadline, jdbcType=VARCHAR}, result=#{result, jdbcType=VARCHAR}
+	     where
+	     todoseq=#{todoSeq}
+      ]]>
+	</update>
+
+	<!-- deleteTodo : delete from tbl_todo where todoseq =? -->  
+		<delete id="deleteTodo" parameterType="int">
+	<![CDATA[
+	   delete from tbl_todo
+	   where todoseq = #{todoSeq}
+	]]>
+	</delete>
+	
+	<!-- searchTodo -->
+	<select id="searchTodo" parameterType="todoVO" resultMap="todoResult">
+	    SELECT *
+	    FROM tbl_todo
+	    <where>
+	        <!-- 조건 추가 -->
+	        <if test="regDate != null">
+	            AND regdate = #{regDate}
+	        </if>
+	        <if test="deadline != null">
+	            AND deadline = #{deadline}
+	        </if>
+	        <if test="result != null">
+	            AND result = #{result}
+	        </if>
+	        <!-- todoData는 일부만 일치하면 조회되도록 LIKE 연산자 사용 -->
+	        <if test="todoData != null">
+	            AND todoData LIKE CONCAT('%', #{todoData}, '%')
+	        </if>
+	    </where>
+</select>
+</mapper>
+
+

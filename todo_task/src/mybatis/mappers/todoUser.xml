@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper -->
+<mapper namespace="mapper.todoUser">
+	<!-- resultMap -->
+	<resultMap id="todoResult" type="todoUserVO">
+		<result property="userId" column="userid" />
+		<result property="userPwd" column="userpwd" />
+		<result property="userName" column="username" />
+	</resultMap>
+
+	<!-- checkLogin : select count(*) from tbl_todouser where userid = #{userId} and userpwd = #{userPwd} -->	
+	<select id="checkLogin" parameterType="java.util.Map" resultType="int">
+		select count(*)
+		from tbl_todouser
+		where userid = #{userId} and userpwd = #{userPwd}
+	</select>
+
+	<!-- insertUser (todoUserVO) : insert into tbl_todouser(userid, userpwd, username) values (#{userId}, #{userPwd}, #{userName}) -->
+	<insert id="insertUser" parameterType="todoUserVO">
+		<![CDATA[
+		 insert into tbl_todouser(userid, userpwd, username)
+		 values(#{userId}, #{userPwd}, #{userName})
+		]]>
+	</insert>
+
+	<!-- updateUser : update tbl_todouser set userpwd=?, username=? where userid=? -->
+	<update id="updateUser" parameterType="todoUserVO">
+     <![CDATA[
+	     update tbl_todouser
+	     set userpwd=#{userPwd}, username=#{userName}
+	     where
+	     userid=#{userId}
+      ]]>
+	</update>
+
+	<!-- deleteUser : delete from  tbl_todouser where userid=? -->  
+		<delete id="deleteUser" parameterType="String">
+	<![CDATA[
+	   delete from tbl_todouser
+	   where userid = #{userId}
+	]]>
+	</delete>
+</mapper>
+
+
