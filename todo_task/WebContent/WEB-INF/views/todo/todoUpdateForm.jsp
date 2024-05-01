@@ -22,7 +22,7 @@
 		<div class="container-fluid h-100">
 			<div class="row justify-content-center align-items-center h-100">
 		        <div class="col-md-auto">
-		        	<h1 class="m-5">ToDo 등록</h1>
+		        	<h1 class="m-5">ToDo 수정</h1>
 		            <div class="custom-form text-center" style="width: 25rem;"> <!-- text-center 클래스 추가 -->
 		                <form  method="post"  action="${contextPath}/todo/updateTodo.do">
 		                 	<!-- 내용 -->
