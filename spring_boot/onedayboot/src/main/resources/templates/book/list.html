@@ -1,0 +1,37 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>책 상세</title>
+</head>
+<body>
+	<h1>책 목록</h1>
+	<br>
+	<form method="GET" th:action="@{/book/list}">
+		<select name="pageSize">
+			<option value="5" selected="selected">5개씩</option>
+			<option value="10">10개씩</option>
+			<option value="15">15개씩</option>
+			<option value="20">20개씩</option>
+		</select>
+		<input type="text" th:name="title" placeholder="검색 제목 입력" />
+		&nbsp;
+		<input type="submit" value="검색" />
+	</form>
+	<hr>
+	<table>
+		<tr>
+			<th>책 번호</th>
+			<th>책 제목</th>
+		</tr>
+			<tr th:each="book : ${books}">
+			<td th:text="${book.bookId}"></td>
+			<td><a th:href="@{/book/read/{id}(id=${book.bookId})}" th:text="${book.title}"></a></td>
+		</tr>
+		
+	</table>
+	<hr>
+	<div>
+		<a th:href="@{/book/create}" th:text="'책 추가'"></a>
+	</div>
+</body>
+</html>
+
