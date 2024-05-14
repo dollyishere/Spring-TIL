@@ -28,29 +28,30 @@
 	<p>
 	<input type="text" id="book_log_comment" />
 	<input type="text" id="book_log_page" placeholder="페이지" />
+	<!-- jQuery에서 끌어다 쓸 수 있도록 bookId를 변수화(th:attr) -->
 	<input type="button" id="book_log_save" value="책 기록 저장" th:attr="data-bookId=${bookReadResponseDTO.bookId}" />
 	</p>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-	$("#book_log_save").click(function(){
-		var book_log_comment = $("#book_log_comment").val();
-		var post_data = {
-			bookId : $("#book_log_save").attr("data-bookId"),
-			comment : $("#book_log_comment").val(),
-			page : $("#book_log_page").val() != "" ? $("#book_log_page").val() : null};
-			$.ajax({
-				type: "POST",
-				url : "/book-log/create",
-				data : JSON.stringify(post_data),
-				success : function(data){
-					var append_html = "<p>" + (data.page == null ? "" : "(p." + data.page + ".) ") + data.comment + "</p>";
-					$("#book_log").append(append_html);
-				},
-				dataType : "json",
-				contentType : "application/json"
+		$("#book_log_save").click(function(){
+			var book_log_comment = $("#book_log_comment").val();
+			var post_data = {
+				bookId : $("#book_log_save").attr("data-bookId"),
+				comment : $("#book_log_comment").val(),
+				page : $("#book_log_page").val() != "" ? $("#book_log_page").val() : null};
+				$.ajax({
+					type: "POST",
+					url : "/book-log/create",
+					data : JSON.stringify(post_data),
+					success : function(data){
+						var append_html = "<p>" + (data.page == null ? "" : "(p." + data.page + ".) ") + data.comment + "</p>";
+						$("#book_log").append(append_html);
+					},
+					dataType : "json",
+					contentType : "application/json"
+				});
 			});
-		});
 	});
 </script>
 </html>

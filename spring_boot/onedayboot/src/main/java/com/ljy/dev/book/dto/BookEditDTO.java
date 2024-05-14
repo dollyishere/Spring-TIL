@@ -17,11 +17,11 @@ public class BookEditDTO {
 	// 따라서 엔티티 안붙임 => 테이블 만든다던지, 값 수정한다든지에는 관여하지 않음
 	// 생성자 annotation은 따로 있음
 	@NonNull
-	@Positive
+	@Positive // 양수 값만 허용
 	private Integer bookId;
 	
-	@NonNull
-	@NotBlank
+	@NonNull // null 값 허용하지 않음
+	@NotBlank // 빈값인지 아닌지 확인
 	private String title;
 	
 	
